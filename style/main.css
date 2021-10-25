@@ -82,7 +82,7 @@ figcaption{
 var{
     display: none;
 }
-article:hover  var{
+article:hover var{
     display: block;
 }
 article:hover img{
@@ -99,4 +99,12 @@ footer{
 footer > h3{
     text-align: center;
     padding-top: 30px;
+}
+.hide {
+    visibility: hidden;
+    position: absolute;
+}
+
+.show {
+    visibility: visible;
 }

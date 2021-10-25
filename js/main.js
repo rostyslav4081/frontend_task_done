@@ -1,27 +1,6 @@
-// let Y = document.getElementsByTagName('body')[0].getElementsByTagName('article');
+// let Y = document.getElementsByTagName('body')[0].getElementsByTagName('article');//225
 // let Y = document.querySelector('body').children.length;
-// console.log(Y);
-//  let body = document.getElementsByTagName('body');
-//     length = body.length,
-//     i, wrapper;
-// wrapper = document.createElement('div');
-// wrapper.setAttribute('class', 'cul');
-// body.appendChild(wrapper);
-// for (i = 0; i < length; i++) {
-//     wrapper = document.createElement('div');
-//     wrapper.setAttribute('class', 'cul');
-//     body[i].parentNode.innerHTml(wrapper, body[i]);
-//     wrapper.appendChild(body[i]);
-// }
-// let div_1 = document.createElement("div");
-// div_1.setAttribute('class', 'col');
-// document.body.appendChild(div_1);
-// let div_2 = document.createElement("div");
-// div_2.setAttribute('class', 'col');
-// document.body.appendChild(div_2);
-// let div_3 = document.createElement("div");
-// div_3.setAttribute('class', 'col');
-// document.body.appendChild(div_3);
+// console.log(Y);//225
 function getSelectValue() {
     let selectedValue = document.getElementById("list").value;
     console.log(selectedValue);
@@ -31,57 +10,221 @@ function getSelectValue() {
     return selectedText;
 }
 
-function search() {
-
-
+function showEl(X){
+    let footer = document.getElementsByTagName('h3');
+    footer[0].innerText = `Number of found items ${X}/225`
 }
 
+function search() {
+let listSelected = getSelectValue();
+let input = document.querySelector('#search_bar');
+let inputValue = input.value.toUpperCase();
+HTMLCollection.prototype.forEach = Array.prototype.forEach;
+let books =  document.getElementsByTagName('article');
+let checkbox = document.getElementById('regex').value;
+let counter = 0;
+if (checkbox.checked === false){
+    if (listSelected === 'Name'){
+        books.forEach(
+            function getMatch(info) {
+                let name = info.querySelector('summary');
+                let nameContent = name.innerHTML.toUpperCase();
+                if (nameContent.includes(inputValue)) {
+                    info.classList.add('show');
+                    info.classList.remove('hide');
+                    counter++;
+                }
+                else {
+                    info.classList.add('hide');
+                    info.classList.remove('show');
+                }
+                showEl(counter);
+            }
+        )
+    }
+    if(listSelected === 'Author'){
+        books.forEach(
+            function getMatch(info) {
+                let author = info.querySelectorAll('var');
+                let authorContent = author[1].innerHTML.toUpperCase();
+
+                if (authorContent.includes(inputValue)) {
+                    info.classList.add('show');
+                    info.classList.remove('hide');
+                    counter++;
+                }
+                else {
+                    info.classList.add('hide');
+                    info.classList.remove('show');
+                }
+                showEl(counter);
+            }
+        )
+    }
+    if (listSelected === 'Author and name'){
+        books.forEach(
+            function getMatch(info) {
+                let name = info.querySelector('summary');
+                let nameContent = name.innerHTML.toUpperCase();
+                let author = info.querySelectorAll('var');
+                let authorContent = author[1].innerHTML.toUpperCase();
+
+                if (nameContent.includes(inputValue) || authorContent.includes(inputValue)) {
+                    info.classList.add('show');
+                    info.classList.remove('hide');
+                    counter++;
+                }
+                else {
+                    info.classList.add('hide');
+                    info.classList.remove('show');
+                }
+                showEl(counter);
+            }
+        )
+    }
+    if(listSelected === 'All'){
+        books.forEach(
+            function getMatch(info) {
+                let name = info.querySelector('summary');
+                let nameContent = name.innerHTML.toUpperCase();
+                let author = info.querySelectorAll('var');// All Vars
+                let authorContent = author[1].innerHTML.toUpperCase();
+                let category = author[3].innerHTML.toUpperCase();
+
+                if (nameContent.includes(inputValue) || authorContent.includes(inputValue) || category.includes(inputValue)) {
+                    info.classList.add('show');
+                    info.classList.remove('hide');
+                    counter++;
+                }
+                else {
+                    info.classList.add('hide');
+                    info.classList.remove('show');
+                }
+                showEl(counter);
+            }
+        )
+    }
+    if(listSelected === 'Please select option'){
+        alert('Please select option!');
+    }
+} else {
+    let inputReg = document.querySelector('#search_bar');
+    const inputRegValue = new RegExp(inputReg.value);
+    if (listSelected === 'Name'){
+        books.forEach(
+            function getMatch(info) {
+                let name = info.querySelector('summary');
+                let nameContent = name.innerHTML;
+                if (inputRegValue.test(nameContent)) {
+                    info.classList.add('show');
+                    info.classList.remove('hide');
+                    counter++;
+                }
+                else {
+                    info.classList.add('hide');
+                    info.classList.remove('show');
+                }
+                showEl(counter);
+            }
+        )
+    }
+    if(listSelected === 'Author'){
+        books.forEach(
+            function getMatch(info) {
+                let author = info.querySelectorAll('var');
+                let authorContent = author[1].innerHTML;
+                if (inputRegValue.test(authorContent)) {
+                    info.classList.add('show');
+                    info.classList.remove('hide');
+                    counter++;
+                }
+                else {
+                    info.classList.add('hide');
+                    info.classList.remove('show');
+                }
+                showEl(counter);
+            }
+        )
+    }
+    if (listSelected === 'Author and name'){
+        books.forEach(
+            function getMatch(info) {
+                let name = info.querySelector('summary');
+                let nameContent = name.innerHTML;
+                let author = info.querySelectorAll('var');
+                let authorContent = author[1].innerHTML;
+
+                if (inputRegValue.test(nameContent) || inputRegValue.test(authorContent)) {
+                    info.classList.add('show');
+                    info.classList.remove('hide');
+                    counter++;
+                }
+                else {
+                    info.classList.add('hide');
+                    info.classList.remove('show');
+                }
+                showEl(counter);
+            }
+        )
+    }
+    if(listSelected === 'All'){
+        books.forEach(
+            function getMatch(info) {
+                let name = info.querySelector('summary');
+                let nameContent = name.innerHTML;
+                let author = info.querySelectorAll('var');// All Vars
+                let authorContent = author[1].innerHTML;
+                let category = author[3].innerHTML;
+                if (inputRegValue.test(nameContent) || inputRegValue.test(authorContent) || inputRegValue.test(category)) {
+                    info.classList.add('show');
+                    info.classList.remove('hide');
+                    counter++;
+                }
+                else {
+                    info.classList.add('hide');
+                    info.classList.remove('show');
+                }
+                showEl(counter);
+            }
+        )
+    }
+    if(listSelected === 'Please select option'){
+        alert('Please select option!');
+    }
+}
+
+}
+// let re = /Th+e/;
+// let str = "abbbcfee The foo fum";
+// const regex = new RegExp(re);
+// console.log(regex.test(str));
+
 let allDetails = document.querySelectorAll('details');
-// for (let i = 0; i < all_details.length; i++) {
-//     let wrapper = document.createElement('div');
-//     wrapper.setAttribute('class', 'details_box');
-//     all_details[i].parentNode.insertBefore(wrapper, all_details[i]);
-//     wrapper.appendChild(all_details[i]);
-// }
 for (let i = 0; i < allDetails.length; i++) {
     allDetails[i].open = true;
 }
-console.log(allDetails);
-// let details = document.getElementsByTagName('details');
-// for (let detail of details) {
-//     detail.addEventListener('click' ,openImg(detail.id));
-// }
-// function openImg(id){
-//     let img = document.getElementById('img'+id);
-//     if(img.style.display === 'none' ){
-//         img.style.display = 'block';
-//         console.log("opened");
-//     }else
-//     if(img.style.display === 'block') {
-//         img.style.display = 'none';
-//         console.log("closed");
+// console.log(allDetails);
+// node
+// array = [];
+// info = {}
+// img = {}
+// let allArticles = document.getElementsByTagName('article');
+// for (let i = 0; i < allArticles.length; i++) {
+//     let nameBook = allArticles[i].innerText;
+//     let allVars = allArticles[i].getElementsByTagName('var');
+//     console.log(allVars);
+//     for (const Var of allVars) {
+//         info[Var.attributes['data-type'].nodeValue] = Var.innerText;
 //     }
+//     let oneImg = allArticles[i].getElementsByTagName('img');
+//     console.log(oneImg);
+//     console.log(oneImg[0].currentSrc);
+//     console.log(oneImg[0].alt);
+//     img['src'] = oneImg[0].currentSrc;
+//     img['alt'] = oneImg[0].alt;
+//     console.log(nameBook);
+//     console.log(info);
+//     console.log(img);
+//     array[i] = {'id': i+1,'nameBook': nameBook,'info': info,'img': img}
 // }
-array = [];
-info = {}
-img = {}
-let allArticles = document.getElementsByTagName('article');
-for (let i = 0; i < allArticles.length; i++) {
-    let nameBook = allArticles[i].innerText;
-    let allVars = allArticles[i].getElementsByTagName('var');
-    console.log(allVars);
-    for (const Var of allVars) {
-        info[Var.attributes['data-type'].nodeValue] = Var.innerText;
-    }
-    let oneImg = allArticles[i].getElementsByTagName('img');
-    console.log(oneImg);
-    console.log(oneImg[0].currentSrc);
-    console.log(oneImg[0].alt);
-    img['src'] = oneImg[0].currentSrc;
-    img['alt'] = oneImg[0].alt;
-    console.log(nameBook);
-    console.log(info);
-    console.log(img);
-    array[i] = {'id' : i+1,'nameBook':nameBook,'info':info,'img':img}
-}
-console.log(array);
+// console.log(array);
