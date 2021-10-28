@@ -205,26 +205,28 @@ for (let i = 0; i < allDetails.length; i++) {
 }
 // console.log(allDetails);
 // node
-// array = [];
-// info = {}
-// img = {}
-// let allArticles = document.getElementsByTagName('article');
-// for (let i = 0; i < allArticles.length; i++) {
-//     let nameBook = allArticles[i].innerText;
-//     let allVars = allArticles[i].getElementsByTagName('var');
-//     console.log(allVars);
-//     for (const Var of allVars) {
-//         info[Var.attributes['data-type'].nodeValue] = Var.innerText;
-//     }
-//     let oneImg = allArticles[i].getElementsByTagName('img');
-//     console.log(oneImg);
-//     console.log(oneImg[0].currentSrc);
-//     console.log(oneImg[0].alt);
-//     img['src'] = oneImg[0].currentSrc;
-//     img['alt'] = oneImg[0].alt;
-//     console.log(nameBook);
-//     console.log(info);
-//     console.log(img);
-//     array[i] = {'id': i+1,'nameBook': nameBook,'info': info,'img': img}
-// }
-// console.log(array);
+array = [];
+info = {}
+img = {}
+let allArticles = document.getElementsByTagName('article');
+for (let i = 0; i < allArticles.length; i++) {
+    let name = allArticles[i].innerText;
+    let allVars = allArticles[i].getElementsByTagName('var');
+    console.log(allVars);
+    for (const Var of allVars) {
+        info[Var.attributes['data-type'].nodeValue] = Var.innerText;
+    }
+    let oneImg = allArticles[i].getElementsByTagName('img');
+    console.log(oneImg);
+    console.log(oneImg[0].currentSrc);
+    console.log(oneImg[0].alt);
+    img['src'] = oneImg[0].currentSrc;
+    img['alt'] = oneImg[0].alt;
+    img[i] = {'src': oneImg[0].currentSrc, 'alt': oneImg[0].alt}
+    console.log(img);
+    console.log(name);
+    console.log(info);
+    array[i] = {'id': i+1,'name': name,'info': info, 'img': img[i]}
+}
+console.log(array);
+console.log(img);
