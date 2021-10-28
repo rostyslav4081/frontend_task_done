@@ -213,9 +213,11 @@ for (let i = 0; i < allArticles.length; i++) {
     let name = allArticles[i].innerText;
     let allVars = allArticles[i].getElementsByTagName('var');
     console.log(allVars);
-    for (const Var of allVars) {
-        info[Var.attributes['data-type'].nodeValue] = Var.innerText;
-    }
+    info[i] = {[`${allVars[0].attributes['data-type'].nodeValue}`]: allVars[0].innerText,
+        [`${allVars[1].attributes['data-type'].nodeValue}`]: allVars[1].innerText,
+        [`${allVars[2].attributes['data-type'].nodeValue}`]: allVars[2].innerText,
+        [`${allVars[3].attributes['data-type'].nodeValue}`]: allVars[3].innerText}
+    console.log(info[i]);
     let oneImg = allArticles[i].getElementsByTagName('img');
     console.log(oneImg);
     console.log(oneImg[0].currentSrc);
@@ -226,7 +228,8 @@ for (let i = 0; i < allArticles.length; i++) {
     console.log(img);
     console.log(name);
     console.log(info);
-    array[i] = {'id': i+1,'name': name,'info': info, 'img': img[i]}
+    array[i] = {'id': i+1,'name': name,'info': info[i], 'img': img[i]}
 }
 console.log(array);
 console.log(img);
+console.log(info);
